@@ -1,0 +1,91 @@
+题目：设三个整型变量 x = 1 , y = 2 , z = 3，则表达式 y＋＝z－－/＋＋x 的值是
+解答：一定要注意z－－/＋＋x这块的计算结果转为int是向下取整而不是四舍五入；
+题目：类可以实现多个接口，接口不能继承（或扩展）多个接口
+解答：错误，类与类之间的关系为继承，只能是单继承；类与接口之间的关系为实现，既可以单实现也可以多实现；3.接口与接口之间的关系为继承，既可以单继承也可以多继承；
+题目：class Base {
+    Base() {
+    System.out.print("Base");
+    }
+}
+public class Alpha extends Base {
+    public static void main( String[] args ) {
+        new Alpha();
+        //调用父类无参的构造方法
+        new Base();
+    }
+}
+解答：new子类对象的时候会默认super以下父类的构造方法！！！
+
+题目：服务器端通过new ServerSocket()创建通信的Socket对象||客户端通过new Socket()方法创建通信的Socket对象
+解答：serversocket  ..=new serversocket(port);  socket s=.. .accept();当有哭护短连接时才创建socket对象，而不是new serversocket的时候创建；
+
+题目：class A{
+    public float getNum(){
+        return 3.0f;
+    }
+}
+public class B extends A{
+    【代码】
+}
+解答：方法的重写要求方法名，返回值类型，参数完全相同；
+
+笔记：枚举类型在后台实现时，实际上是转化一个继承一个新的构造函数，若原来有构造函数，则在此基础上添加两个参数，生成新的构造函数
+
+题目：public class B
+{
+    public static B t1 = new B();
+    public static B t2 = new B();
+    {
+        System.out.println("构造块");
+    }
+    static
+    {
+        System.out.println("静态块");
+    }
+    public static void main(String[] args)
+    {
+        B t = new B();
+    }
+}
+解答：类加载初始化静态成员变量，静态成员变量调用B类型的构造方法，但是需要注意这个时候因为已经类加载过了所以不会再执行静态成员方法，所以先执行的实际上是“构造块”；
+
+
+题目：以下语句返回值为 true 的是（）
+Integer al=17, a2=17
+Integer bl= 2017, b2= 2017:
+Integer cl= new Integer(17)
+Integer C2= new Integer(17);
+Integer dl=new Integer(2017),
+intd2=2017；
+解答：a1==a2因为a1和a2实际上都是赋值给integer类型，自动装箱，返回的是缓存的integer对象，变量所指向的是同一对象；d1==d2，因为integer和int比较会践行自动拆箱，比较的是值的大小；b1!=b2因为超出了自动装箱的范围，返回的是新建的对象，所以内存地址不同；c1!=c2因为通过new创建出来的两个对象地址是不相同的。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
