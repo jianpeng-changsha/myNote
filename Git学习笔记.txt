@@ -21,9 +21,58 @@ Git支持多种传输协议。比如https://协议，ssh协议等等
 由于环境不够没办法在windows下进行的部分：
 共享标签：使用git push origin 《tagname》将标签显式的送到共享服务器上，如果想要同时推送多个标签，可以使用代表--tags选项的git push命令，该命令会吧所有不在远程仓库服务器上的标签全部送到那里；删除远程标签的方式是git pushorgin--delete《tagname》
 
+
+
 Git分支：
 Git仓库中有五个对象：包括三个blob对象（用来保存文件快照），一个树对象（记录着目录结构和blob对象的索引）以及一个提交对象（记录着指向前面所述对戏那个的指针和所有的提交信息）
 使用git commit进行提交操作时，git会先计算每一个子目录的校验和然后再Git仓库中这些校验和保存为树对象，然后，Git便会创建一个提交对象它除了上面的信息还会包含指向这个树对象的指针
+git config的三个作用域：--local只对某一个仓库有效；--global对当前用户所有的仓库都有效；--system对系统所有用户都有效
+git commit -m'注释内容'//将暂存区里面的内容提交到本地库中；
+git log//查看日志信息；
+git add -u//对已经跟踪的文件提交到暂存区；
+git mv readme readme.md//最简单的文件名修改方式；
+git branch -v查看本地有多少个分支
+git log//查看当前分支的日志信息
+git log --all//查看所有分支的日志信息
+git log --all --graph//图形化查看所有分支的日志信息
+gitk//查看图形化日志信息
+find .git/objects -type f//查看是否有文件对象
+git cat-file -t ******//查看文件类型
+git cat-file -p *****//查看文件内容
+git checkout -b fix_readme fix_css//创建一个新的分支fix_readme并将head指向新创建的分支；
+git diff *****  *****//从头开始查看分支的不同
+git diff HEAD HEAD^1//比较HEAD和HEAD的父指针指向的内容
+
+进阶1：
+git branch -d/-D ******//删除某一个特定的分支
+git commit --amend//修改最新提交的commit的message
+git rebase -i ******//pack --->r//修改保存（-i表示交互式）
+git rebase -i ******//pack --->s//合并连续的几个commit//合并不连续的commit可以再交互式的时候将不连续的改成连续的
+git diff --cached//比较暂存区和head之间的差异
+git diff//查看工作区和暂存区之间的所有差别差别
+git diff -- readme.md//查看工作区和暂存区指定文件的差别
+git reset HEAD//回复暂存区和head一致；
+git reset HEAD -- **** ****//取消暂存区部分文件的更改
+（危！）git checkout --<file>//让工作区的文件恢复到和暂存区一致
+（危！）git reset --hard ****//回到****的位置，消除最近几次的提交
+git diff temp master -- index.HTML//查看不同分支指定文件之间的差异
+git rm ？？？？//正确的删除工作区和缓存区文件的指令
+git stash//暂时将正在处理的暂存区放到一边///git stash apply/pop//完成紧急任务之后让挂起的任务回到暂存区
+mv doc.gitignore .gitignore//想让git不要管理这个文件
+git push -u origin master   （注：此操作目的是把本地仓库push到github上面，此步骤需要你输入帐号和密码）
+git remote -v//
+
+
+
+
+
+
+
+
+git的常用传输协议：本地协议：/path/to/repo.git	哑协议  本地协议file:///path/to/repo.git  	智能协议 	http或者是HTTPS协议 平时接触到的都是只能协议  	ssh协议工作中常用的智能协议
+哑协议和智能协议：哑协议传输进度是不可见的，智能协议的传输是可见的；传输速度只能协议的传输速度比哑协议的传输速度快；
+
+
 
 
 

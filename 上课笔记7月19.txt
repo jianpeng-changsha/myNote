@@ -1,0 +1,81 @@
+7月19
+
+3.linkedhashmap
+特点:1.linkedhashmap是hashmap的子类（map接口的子实现）2.linkedhashmap基本上完全复用了hashmap的底层结构；3.（数组加链表加红黑树）4.只有一个地方做了改变，节点类型是hashmap节点的子类，在hash值key，value，next的基础上增加了before和after，用来保证添加顺序；linkedhashmap在hashmap的基础上额外维护了一个双向链表；5.linkedhashmap由于维护了一个双向链表保证了迭代顺序，所以我们认为linkedhashmap是有序的
+hashmap和linkedhashmap的实现依赖于abstractmap的tostring方法，hashmap按照从0开始遍历，
+注意：linkedhashmap仅仅比hashmap的节点类型增加了前后指向，别的东西没变 
+
+构造方法：
+linkedhashmap<>(int ,加载因子，true)如果置为true如果要访问某个元素，会改变访问顺序；
+api：clear()
+阻塞队列应用场景：底层源码或者是第三方插件中使用；
+
+4.treemap 
+特点：是map的一个具体子实现2.底层结构：红黑树(特殊的二叉搜索树)最底层是链表；3.大小有序，在二叉搜索树上面进行查找；4.不允许重复；5.不允许存储null key；6.线程不安全；
+迭代是中序遍历；
+构造方法：由于treemap底层是以个红黑树，红黑树又是一个特殊的二叉搜索树，我们要求存储到treemap中的key是可以比较大小的，大小的比较方式也有两个，第一个是treemap本身提供了比较器；2.存储的key本身实现了comparable的compare方法
+api：celingentry：返回一个key-value，大于等于给定key；ceilingkey（K）返回一个大于给定key；comparator返回比较器；containskey判断某一个key值是否存在；containsvalue；entryset()返回一个map存储的key-value键值对集合；firstentry 返回第一份key-value数据；firstkey；floorkey()；headmap()返回一个map对象，这个返回的map中存储严格小于给定剑指的键值对（这个true和false表示的是是否包含指定的键值对）；tailmap获得一个大于等于给定值的键值对（如果给false表示不包含）；submap切割；higherentry返回一个给定键的键值对；highkey；lastkey；lowerkey小于给定键的键；keyset获得所有的键集；navigablekeyset返回键集；values返回值集；pollfirstentry返回最小的键值对；remove；desendingkeyset返回键的逆序视图；
+浅表副本：
+
+
+5.hashtable
+
+1.是map接口一个子实现；2.出现遭遇map；3.底层结构数组加链表；4初始容量（默认初始容量11）和扩容机制（扩为原本的两倍加1）；5.无序不允许重复；6.不孕村相互null键也不允许存储null值；7.线程安全；
+hashtable计算hash值和计算下标方式也不同hashmap；
+concurrenthashtable：是abstracthashmap的子类；支持获取的完全并发和更新的所期望可调整并发的hash表，此类遵守与hashtable相同的功能规范，并且包括对应于hashmap的每个方法的方法版本，不过尽管所有的操作都是线程安全的，但获取操作不必锁定，并且不支持以某种防止所有访问的方式锁定整个表，此类可以通过程序完成与hashtable进行互操作，这取决于其线程安全，而与其同步的细节无关；
+concurrenthashtable和hashtable的区别：1.空间结构的不同，concurrenthashtable可以看做是多个hashtable的组合，每个hashtable单元被称为一个段，2.锁机制，concurrenthashmap抛弃了hashmap的单锁机制，使用了锁分离技术，使得多个修改操作能够并发执行。concurrenthashmap内部使用了segment，预设是16个段，来表示这些不同的部分，每个段其实就是一个小的hashtable，通过多个锁来控制对不同段的hash表进行修改，每个所只负责一部分key的hash值范围，只要多个修改操作发生在不同段上，他们就可以并发执行；hashtable的put和get方法都是同步方法，多个执行不能并发操作，必须等到当前执行释放完锁之后，下一个执行的锁才能进行存或者取，并发效率和吞吐量大大下降，而concurrenthashtable的get方法多数情况下都不用锁，普通方法需要锁；4、保持资源的一致性方式有一定的差异：hashtable采用的是同步的方法保证独占式访问一个数据结构，concurrenthashmap没有采用独占性和一致性的同步，如果没有同步的话，在一个给定执行中某种顺序的写操作对另一个不同的执行来说可能会呈现出不同的顺序，并且对记忆体变数的更新从一个执行传播到另外一个执行的时间时不可预测的。
+properties：（面试不会面）1.hashtable的一个子类；2.用来做持久化，持久化：把内存上的东西写到磁盘文件上
+如果使用properties的时候不要使用properties从hashtable继承来的方法
+properties.storetoxml:存储为.xml	
+properties.store():存储为配置文件
+json：json是当下时代主流的数据传输格式，{}表示一个对象[]表示一个数组；
+xml解析：目前最流行的xml解释的三种方式是DOM、SAX和DOM4j，DOM在解析文件之前需要将文档一次性再加到内存中，适合对文件的随机访问，不适合进行顺序访问；SAX是基于事件驱动的解析方式，它顺序读取xml文件当遇到文档开始，文档结束，标签开始，标签结束都会触发响应的事件，用户通过在其毁掉事件中写入处理代码，适合对xml的顺序访问；DOM4j是一个简单的开源库用于处理xml，xpath和xslt，它基于java平台使用java的集合框架，全面集成了DON、SAX 和JAXP，是目前比较流行的xml文档解析方法；
+游戏引擎：三大主流的引擎；
+set和map之间的关系：map下面有三个重要的子实现：hashmap；linkedhashmap；treemap；set下面有三个重要的子实现
+set：
+特点：set接口是collection的一个子接口描述的数据结构是集合，有些字实现是有序的（linkedhashset，treeset）有些子实现是无序的（hashset），有些子实现允许存储null，有些不允许；不允许存储重复元素；
+api：add()；addall()添加所有；clear()清空；contains()；containsall()；equals()比较两个对象是否相等；hashcode();iterator（）；remove();removeall();retainall()保留所有匹配元素；toarra()返回集合中包含的所有集合的数组()；
+
+hashset：
+特点：hashset是set接口的一个具体实现；hashset底层吃哟一个hashmap对象(数组+链表+红黑树)3.ahshset存储的元素实际上是存储到底层hashmap作为key存在；hashset存储元素的特点基本上和hashmap的key的特点一样；4.线程不安全；
+构造方法：hashset()构造一个空的set底层的默认初始容量是16，加载因子是0.75；
+api：
+
+linkedhashset：
+特点：1.是set接口的一个具体子实现，hashset的一个子类；2.底层持有的是一个linkedhashmap对象（数组+链表+红黑树 双向链表）结构；3.存储到linkedhashset中元素特点基本上和linkedhashmap中key值得特点一样（有序的）4.不允许重复元素，允许null；5.线程不安全；
+构造方法：linkedhashset();linkedhashset(collection)；linkedhashset(int);linkedhashset(int,float);
+api:没有额外的api都是从hashset中继承过来的；
+
+treeset：
+特点：treeset是set接口的具体实现；底层持有的是一个treemap3.底层结构是红黑树；4.treeset存储元素的特点和treemap存储key的特点是一样的，可以比较大小；5.线程不安全；
+构造方法：treeset();treeset(new comparator);treeset(sortedset);
+api:add（）；addall();ceiling()返回大于等于值；clone()浅表副本；descending()逆序迭代；desendingset()逆序视图；
+
+符号表：
+使用符号表这个词来描述一张抽象的表格，我们会将信息训处在其中，然后按照指定的键来搜索并获取这些信息；
+
+hashtable：
+在一个东西中用数组来实现符号表将建作为数组的索引，数组中对应的位置存储向应的value；
+用hash函数将键转换为数组的一个索引理想情况下不同的键都能转换成不同的索引值。
+hash算法用来散列；
+文件-->hash算法-->数；
+正向快速：给定明文和hash酸轧，再有限时间和有限资源内能计算出hash值；
+逆向困难：给定（若干）hash值，在有限的时间内很难逆推出明文，
+输入敏感：原始输入信息修改一点信息，产生的hash值看起来应该有很大的不同；
+冲突避免：很难找到两端内容不同的明文，使他们的hash值一致，即地狱任意两个不同的数据块，其hash值的可能性极小，对于一个给定的数据块，找到和它hash值相同的数据块纪委困难；
+hash算法不是加密酸轧，hash算法存在的意义不是为了解密；加密意味着解密
+md4：128位，md4已经证明不够安全。
+MD5：128位，MD5已经被证明不具备强抗碰撞性。（大公司的小项目）
+sha1：sha-1已经被证明不具有“强抗碰撞性”（大公司的核心项目）
+sha2：下分为6个不同标准的算法，最主流的是sha-256和sha-512前者定义一个word为32 位或者则定义一个word为64 位，他们采用了不同的偏移量或者不同的常量，然而实际上二者的结构是相同的，只在循环运行的次数有差异；
+sha3：相关算法已经被提出。
+
+MD5 sha1因为不具有强碰撞性，所以不安全，我们可以通过加salt进一步保证数据安全
+加盐：在密码雪中，是值在散列之前将三IE的内容的任意固定位置插入特定的字符串，这个单列中加入字符串的当时称作是加盐，作用是让加盐有的散列结果和没有加盐的结果不相同；
+拉链法；线性探测法；
+
+
+
+
+
+
